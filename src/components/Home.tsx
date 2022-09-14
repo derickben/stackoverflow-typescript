@@ -16,6 +16,7 @@ const Home: React.FC = () => {
   const getQuestions = async () => {
     try {
       setIsLoading(true);
+      setApiError("");
       const response = await fetch(
         `https://api.stackexchange.com/2.3/questions?order=desc&sort=activity&site=stackoverflow&key=${process.env.REACT_APP_STACKOVERFLOW_KEY}`
       );
@@ -24,7 +25,6 @@ const Home: React.FC = () => {
       setIsLoading(false);
 
       if (data.items) {
-        setApiError("");
         return data.items;
       } else {
         setApiError("Could not fetch qustions");
@@ -33,13 +33,15 @@ const Home: React.FC = () => {
     } catch (error) {
       setIsLoading(false);
       console.log({ error });
-      setApiError("Unable to retrieve Questions!");
+      setApiError("Network Error!");
     }
   };
 
   const handleOnClick = async () => {
     const result = await getQuestions();
-    setAllQuestions(result);
+    if (Array.isArray(result)) {
+      setAllQuestions(result);
+    }
   };
 
   const handleReset = () => {
