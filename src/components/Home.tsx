@@ -8,7 +8,7 @@ interface Data {
   [prop: string]: any;
 }
 
-export const Home: React.FC = () => {
+const Home: React.FC = () => {
   const [allQuestions, setAllQuestions] = useState<Data[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [apiError, setApiError] = useState<string>("");
@@ -71,3 +71,5 @@ export const Home: React.FC = () => {
     </div>
   );
 };
+
+export default Home;
