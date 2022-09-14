@@ -8,6 +8,11 @@ interface Data {
   [prop: string]: any;
 }
 
+interface ErrorObj {
+  message: string;
+  [prop: string]: any;
+}
+
 const Home: React.FC = () => {
   const [allQuestions, setAllQuestions] = useState<Data[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -30,10 +35,11 @@ const Home: React.FC = () => {
         setApiError("Could not fetch qustions");
         return [];
       }
-    } catch (error) {
+    } catch (error: any) {
       setIsLoading(false);
       console.log({ error });
-      setApiError("Network Error!");
+
+      setApiError(error?.message ?? "Network Error");
     }
   };
 
